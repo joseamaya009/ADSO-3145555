@@ -243,45 +243,191 @@ CREATE TABLE IF NOT EXISTS payment (
 
 -- INSERTS
 
-INSERT INTO type_document (code, name)
-VALUES 
-('CC', 'Cédula de Ciudadanía'),
-('TI', 'Tarjeta de Identidad'),
-('CE', 'Cédula de Extranjería');
+INSERT INTO type_document (code, name) VALUES
+('PA','Pasaporte'),
+('RC','Registro Civil'),
+('NIT','NIT'),
+('PEP','Permiso Especial Permanencia'),
+('DNI','Documento Nacional'),
+('LIC','Licencia'),
+('OTR','Otro'),
+('PAS','Pasaporte Diplomatico');
 
 INSERT INTO person (type_document_id, document_number, first_name, last_name, email, phone, address)
-SELECT id, '123456789', 'Juan', 'Pérez', 'juan@email.com', '3001234567', 'Calle 123'
-FROM type_document WHERE code = 'CC';
+SELECT id,'100000001','Maria','Gomez','maria@email.com','300000001','Calle 1'
+FROM type_document WHERE code='CC';
 
-INSERT INTO "user" (code, username, email, password_hash, full_name)
-VALUES ('USR001', 'admin', 'admin@coffee.com', 'hash123', 'Administrador');
+INSERT INTO person (type_document_id, document_number, first_name, last_name, email, phone, address)
+SELECT id,'100000002','Pedro','Lopez','pedro@email.com','300000002','Calle 2'
+FROM type_document WHERE code='CC';
 
-INSERT INTO role (name, description)
-VALUES ('ADMIN', 'Administrador del sistema');
+INSERT INTO person (type_document_id, document_number, first_name, last_name, email, phone, address)
+SELECT id,'100000003','Ana','Rodriguez','ana@email.com','300000003','Calle 3'
+FROM type_document WHERE code='CC';
 
-INSERT INTO user_role (user_id, role_id)
-SELECT u.id, r.id
-FROM "user" u, role r
-WHERE u.username = 'admin' AND r.name = 'ADMIN';
+INSERT INTO person (type_document_id, document_number, first_name, last_name, email, phone, address)
+SELECT id,'100000004','Luis','Martinez','luis@email.com','300000004','Calle 4'
+FROM type_document WHERE code='CC';
 
-INSERT INTO category (code, name, description)
-VALUES ('COF', 'Café', 'Bebidas calientes');
+INSERT INTO person (type_document_id, document_number, first_name, last_name, email, phone, address)
+SELECT id,'100000005','Sofia','Torres','sofia@email.com','300000005','Calle 5'
+FROM type_document WHERE code='CC';
 
-INSERT INTO supplier (name, contact_name, email, phone, address)
-VALUES ('Proveedor Central', 'Carlos Ruiz', 'proveedor@email.com', '3011111111', 'Zona Industrial');
+INSERT INTO person (type_document_id, document_number, first_name, last_name, email, phone, address)
+SELECT id,'100000006','Carlos','Ramirez','carlos@email.com','300000006','Calle 6'
+FROM type_document WHERE code='CC';
 
-INSERT INTO product (sku, name, description, category_id, supplier_id, price, cost, stock)
-SELECT 'PROD001','Café Americano','Café negro',c.id,s.id,5000,2500,100
-FROM category c, supplier s
+INSERT INTO person (type_document_id, document_number, first_name, last_name, email, phone, address)
+SELECT id,'100000007','Laura','Diaz','laura@email.com','300000007','Calle 7'
+FROM type_document WHERE code='CC';
+
+INSERT INTO person (type_document_id, document_number, first_name, last_name, email, phone, address)
+SELECT id,'100000008','Andres','Castro','andres@email.com','300000008','Calle 8'
+FROM type_document WHERE code='CC';
+
+INSERT INTO person (type_document_id, document_number, first_name, last_name, email, phone, address)
+SELECT id,'100000009','Camila','Vargas','camila@email.com','300000009','Calle 9'
+FROM type_document WHERE code='CC';
+
+-- ROLE
+
+INSERT INTO role (name, description) VALUES
+('MANAGER','Gerente'),
+('SELLER','Vendedor'),
+('CASHIER','Cajero'),
+('WAREHOUSE','Bodega'),
+('ACCOUNTANT','Contador'),
+('SUPPORT','Soporte'),
+('HR','Recursos Humanos'),
+('CLIENT','Cliente'),
+('GUEST','Invitado');
+
+-- MODULE
+
+INSERT INTO module (code,name,description) VALUES
+('SEC','Security','Seguridad'),
+('PAR','Parameters','Parametros'),
+('INV','Inventory','Inventario'),
+('SAL','Sales','Ventas'),
+('PAY','Payments','Pagos'),
+('BIL','Billing','Facturacion'),
+('REP','Reports','Reportes'),
+('USR','Users','Usuarios'),
+('PRO','Products','Productos'),
+('ORD','Orders','Ordenes');
+
+-- VIEW
+
+INSERT INTO "view"(module_id,code,name)
+SELECT id,'USR_LIST','Lista usuarios' FROM module WHERE code='USR';
+
+INSERT INTO "view"(module_id,code,name)
+SELECT id,'ROL_LIST','Lista roles' FROM module WHERE code='SEC';
+
+INSERT INTO "view"(module_id,code,name)
+SELECT id,'DOC_TYPES','Tipos documento' FROM module WHERE code='PAR';
+
+INSERT INTO "view"(module_id,code,name)
+SELECT id,'PERSONS','Personas' FROM module WHERE code='PAR';
+
+INSERT INTO "view"(module_id,code,name)
+SELECT id,'CATEGORIES','Categorias' FROM module WHERE code='INV';
+
+INSERT INTO "view"(module_id,code,name)
+SELECT id,'SUPPLIERS','Proveedores' FROM module WHERE code='INV';
+
+INSERT INTO "view"(module_id,code,name)
+SELECT id,'PRODUCTS','Productos' FROM module WHERE code='INV';
+
+INSERT INTO "view"(module_id,code,name)
+SELECT id,'CUSTOMERS','Clientes' FROM module WHERE code='SAL';
+
+INSERT INTO "view"(module_id,code,name)
+SELECT id,'ORDERS','Ordenes' FROM module WHERE code='SAL';
+
+INSERT INTO "view"(module_id,code,name)
+SELECT id,'PAYMENTS','Pagos' FROM module WHERE code='PAY';
+
+-- CATEGORY
+
+INSERT INTO category(code,name,description) VALUES
+('COF','Cafe','Bebidas cafe'),
+('TE','Te','Bebidas te'),
+('DES','Postres','Postres dulces'),
+('SAN','Sandwich','Sandwiches'),
+('HEL','Helados','Helados'),
+('JUG','Jugos','Jugos naturales'),
+('PAN','Panaderia','Productos pan'),
+('BEB','Bebidas','Bebidas frias'),
+('ESP','Especiales','Especialidades'),
+('OTR','Otros','Otros productos');
+
+-- SUPPLIER
+
+INSERT INTO supplier(name,contact_name,email,phone,address) VALUES
+('Proveedor Norte','Luis Ruiz','prove1@email.com','300000100','Zona Norte'),
+('Proveedor Sur','Ana Gomez','prove2@email.com','300000101','Zona Sur'),
+('Proveedor Este','Carlos Diaz','prove3@email.com','300000102','Zona Este'),
+('Proveedor Oeste','Pedro Mora','prove4@email.com','300000103','Zona Oeste'),
+('Proveedor Cafe','Juan Perez','prove5@email.com','300000104','Zona Cafe'),
+('Proveedor Dulces','Maria Ruiz','prove6@email.com','300000105','Zona Dulces'),
+('Proveedor Pan','Luis Castro','prove7@email.com','300000106','Zona Pan'),
+('Proveedor Helados','Laura Diaz','prove8@email.com','300000107','Zona Helados'),
+('Proveedor Jugos','Ana Torres','prove9@email.com','300000108','Zona Jugos'),
+('Proveedor Snacks','Pedro Lopez','prove10@email.com','300000109','Zona Snacks');
+
+-- PRODUCT
+
+INSERT INTO product (sku,name,description,category_id,supplier_id,price,cost,stock)
+SELECT 'PROD002','Cafe Latte','Cafe con leche',c.id,s.id,6000,3000,80
+FROM category c,supplier s
 WHERE c.code='COF'
 LIMIT 1;
 
-INSERT INTO customer (person_id, code, first_name, last_name, email, phone, address)
-SELECT p.id,'CLI001',p.first_name,p.last_name,p.email,p.phone,p.address
-FROM person p
-WHERE p.document_number='123456789';
+INSERT INTO product (sku,name,description,category_id,supplier_id,price,cost,stock)
+SELECT 'PROD003','Capuccino','Cafe espumoso',c.id,s.id,6500,3200,70
+FROM category c,supplier s
+WHERE c.code='COF'
+LIMIT 1;
 
-INSERT INTO "order" (code, customer_id, sub_total, tax, total)
-SELECT 'ORD001',c.id,5000,950,5950
-FROM customer c
-WHERE c.code='CLI001';
+INSERT INTO product (sku,name,description,category_id,supplier_id,price,cost,stock)
+SELECT 'PROD004','Te Verde','Te caliente',c.id,s.id,4000,2000,60
+FROM category c,supplier s
+WHERE c.code='TE'
+LIMIT 1;
+
+INSERT INTO product (sku,name,description,category_id,supplier_id,price,cost,stock)
+SELECT 'PROD005','Brownie','Postre chocolate',c.id,s.id,4500,2200,50
+FROM category c,supplier s
+WHERE c.code='DES'
+LIMIT 1;
+
+INSERT INTO product (sku,name,description,category_id,supplier_id,price,cost,stock)
+SELECT 'PROD006','Cheesecake','Postre queso',c.id,s.id,7000,3500,40
+FROM category c,supplier s
+WHERE c.code='DES'
+LIMIT 1;
+
+INSERT INTO product (sku,name,description,category_id,supplier_id,price,cost,stock)
+SELECT 'PROD007','Sandwich','Sandwich jamon',c.id,s.id,8000,4000,30
+FROM category c,supplier s
+WHERE c.code='SAN'
+LIMIT 1;
+
+INSERT INTO product (sku,name,description,category_id,supplier_id,price,cost,stock)
+SELECT 'PROD008','Helado','Helado vainilla',c.id,s.id,5000,2500,25
+FROM category c,supplier s
+WHERE c.code='HEL'
+LIMIT 1;
+
+INSERT INTO product (sku,name,description,category_id,supplier_id,price,cost,stock)
+SELECT 'PROD009','Chocolate','Chocolate caliente',c.id,s.id,5500,2700,40
+FROM category c,supplier s
+WHERE c.code='BEB'
+LIMIT 1;
+
+INSERT INTO product (sku,name,description,category_id,supplier_id,price,cost,stock)
+SELECT 'PROD010','Mocha','Cafe mocha',c.id,s.id,7000,3500,30
+FROM category c,supplier s
+WHERE c.code='COF'
+LIMIT 1;
