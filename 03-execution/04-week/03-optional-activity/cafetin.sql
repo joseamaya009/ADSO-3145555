@@ -5,6 +5,7 @@ CREATE EXTENSION IF NOT EXISTS pgcrypto;
 
 -- MODULE 1: SECURITY
 
+-- Tabla de usuarios
 CREATE TABLE IF NOT EXISTS "user" (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     code TEXT NOT NULL UNIQUE,
@@ -18,6 +19,7 @@ CREATE TABLE IF NOT EXISTS "user" (
     status VARCHAR(20) DEFAULT 'ACTIVE'
 );
 
+-- Tabla de roles y permisos
 CREATE TABLE IF NOT EXISTS role (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     name TEXT NOT NULL UNIQUE,
@@ -28,6 +30,7 @@ CREATE TABLE IF NOT EXISTS role (
     status VARCHAR(20) DEFAULT 'ACTIVE'
 );
 
+-- Tablas de módulos
 CREATE TABLE IF NOT EXISTS module (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     code TEXT NOT NULL UNIQUE,
@@ -37,6 +40,7 @@ CREATE TABLE IF NOT EXISTS module (
     status VARCHAR(20) DEFAULT 'ACTIVE'
 );
 
+-- Tabla de vistas
 CREATE TABLE IF NOT EXISTS "view" (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     module_id UUID REFERENCES module(id) ON DELETE CASCADE,
@@ -48,6 +52,7 @@ CREATE TABLE IF NOT EXISTS "view" (
     UNIQUE(module_id, code)
 );
 
+-- Tabla pivote de asignación usuario-rol
 CREATE TABLE IF NOT EXISTS user_role (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     user_id UUID REFERENCES "user"(id) ON DELETE CASCADE,
