@@ -1,0 +1,17 @@
+databaseChangeLog:
+  - changeSet:
+      id: roles-table
+      author: sgpc
+      changes:
+        - createTable:
+            tableName: roles
+            columns:
+              - column:
+                  name: id_role
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: nombre
+                  type: VARCHAR(50)
